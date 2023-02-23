@@ -28,9 +28,9 @@ testthat::test_that("Numerical and my gradients least-sq coincide", {
   data <- simulate_data(n_obs, n_pred, model = 'linear', seed = 1918)
   design <- data$design; outcome <- data$outcome
   beta <- data$coef_true
-  grad_analytic <-
-    grad_numeric <- approx_grad(log_likelihood, beta,
-                                design = design, outcome = outcome)
+  grad_numeric <- numeric_grad(design, beta, outcome)
+  grad_analytic <- approx_grad(log_likelihood, beta,
+                              design = design, outcome = outcome)
   testthat::expect_true(are_all_close(grad_analytic, grad_numeric,
                                       abs_tol = 1e-2, rel_tol = 1e-2))
 })
