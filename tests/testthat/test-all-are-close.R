@@ -14,7 +14,7 @@ testthat::test_that( "Vectors have large absolute error", {
   # The absolute error is 1e-6
   # Since every element in |v1| > 1, relative error < absolute error
   v2 <- v1 + 1e-6
-  testthat::expect_true(are_all_close(v1,v2,abs_tol=1e-10,rel_tol=1e-5))
+  testthat::expect_false(are_all_close(v1,v2,abs_tol=1e-10,rel_tol=1e-5))
 }
 )
 
@@ -24,6 +24,6 @@ testthat::test_that( "Vectors have large relative error", {
   # The absolute error is 1e-6
   # Since every element in |v1| < 1, relative error > absolute error
   v2 <- v1 + 1e-6
-  testthat::expect_true(are_all_close(v1,v2,abs_tol=1e-5,rel_tol=1e-10))
+  testthat::expect_false(are_all_close(v1,v2,abs_tol=1e-5,rel_tol=1e-10))
 }
 )
