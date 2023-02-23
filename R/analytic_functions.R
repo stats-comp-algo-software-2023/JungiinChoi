@@ -7,7 +7,7 @@ log_likelihood <- function(design, beta, outcome, noise_var = 1){
 #' Compute numeric gradient of log-likelihood for linear model
 numeric_grad <- function(design, beta, outcome, noise_var = 1){
   residual = outcome - design %*% beta
-  return(-crossprod(design, residual)/noise_var)
+  return(crossprod(design, residual)/noise_var)
 }
 
 #' Optimization via BFGS
