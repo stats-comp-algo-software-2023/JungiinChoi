@@ -1,6 +1,6 @@
 #' @export
 
-hiper_glm <- function(design, outcome, model = "linear", option = list()){
+hiper_glm <- function(design, outcome, model = "linear", option = list(mle_solver = 'pseudo-inverse')){
 
   supported_model <- c("linear", "logit")
   if (!(model %in% supported_model)) {
@@ -13,8 +13,7 @@ hiper_glm <- function(design, outcome, model = "linear", option = list()){
   if (model == "linear"){
     # via pseudo-inverse (X'X)^{-1}X'Y
     beta = solve(crossprod(design), crossprod(design, outcome))
-
-    if (option$mle_solver = 'BFGS'){
+    if (option$mle_solver == 'BFGS'){
       init_beta = beta
       # via BFGS
       beta = optim_bfgs(init_beta, design, outcome)
