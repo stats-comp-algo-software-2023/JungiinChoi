@@ -5,7 +5,7 @@ print.hglm <- function(hglm_out) {
 
 #' @export
 coef.hglm <- function(hglm_out) {
-  warning("This function is yet to be implemented.")
+  print(hglm_out$coef)
 }
 
 #' @export

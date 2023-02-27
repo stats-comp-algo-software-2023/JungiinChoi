@@ -1,12 +1,28 @@
 #' @export
-hiper_glm <- function(design, outcome, model = "linear") {
+
+hiper_glm <- function(design, outcome, model = "linear", option = list(mle_solver = 'pseudo-inverse')){
+
   supported_model <- c("linear", "logit")
   if (!(model %in% supported_model)) {
     stop(sprintf("The model %s is not supported.", model))
   }
-  warning("`hiper_glm` is yet to be implemented.")
-  # TODO: maximize likelihood
+
   hglm_out <- list()
   class(hglm_out) <- "hglm"
+
+  if (model == "linear"){
+    # via pseudo-inverse (X'X)^{-1}X'Y
+    beta = solve(crossprod(design), crossprod(design, outcome))
+    if (option$mle_solver == 'BFGS'){
+      init_beta = beta
+      # via BFGS
+      beta = optim_bfgs(init_beta, design, outcome)
+    }
+  } else if (model == "logit"){
+    # not yet implemented
+  }
+  hglm_out$coef = beta
+  hglm_out$fitted.values = crossprod(t(design), beta)
+  hglm_out$residuals = outcome - hglm_out$fitted.values
   return(hglm_out)
 }
